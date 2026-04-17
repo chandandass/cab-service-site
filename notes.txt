@@ -1,0 +1,199 @@
+Project: Abhi Cab Service website
+Date: 2026-04-17
+
+1. Goal
+- Build a modern, visual, conversion-focused, SEO-friendly cab service website.
+- Primary purpose: get direct inquiries and bookings through WhatsApp and phone calls.
+- Website should rank for local taxi/cab search intent around Panchkula, Chandigarh, Mohali, Delhi route bookings, airport taxi, and "near me" queries.
+
+2. Business / Brand
+- Working brand name: Abhi Cab Service
+- Primary location: Sector 20, Panchkula, near Suncity
+- Service region focus:
+  Panchkula
+  Chandigarh
+  Mohali
+  Delhi route bookings
+  Chandigarh airport taxi service
+  Local and outstation cab service
+
+3. Provided Pricing Data
+- Panchkula to Delhi Sedan: Rs. 3700
+- Panchkula to Delhi SUV Ertiga: Rs. 4700
+- Panchkula to Delhi Innova Crysta: Rs. 6700
+- Panchkula to Delhi Innova Hycross Hybrid: Rs. 7700
+- Delhi to Chandigarh Sedan: Rs. 3500 + parking extra
+
+4. Required Website Features
+- Fully responsive layout for mobile and desktop.
+- Premium, modern visual style.
+- Strong SEO structure.
+- Call button.
+- WhatsApp deep link button.
+- Pricing section visible and easy to find.
+- Top navigation should include a dedicated pricing tab/tag along with sections like Home, About Us, Services, etc.
+- User-grabbing sections and CTAs throughout the page.
+- Config-driven content so phone number, WhatsApp number, prices, SEO text, and address can be changed easily later.
+
+5. Suggested Information Architecture
+- Header / sticky nav
+  Home
+  About
+  Services
+  Pricing
+  Service Areas
+  Contact
+- Hero section
+  Strong local headline
+  Short trust-building subheadline
+  Call now CTA
+  WhatsApp booking CTA
+  Quick highlights: on-time pickup, clean cars, local driver support, transparent pricing
+- Popular routes / pricing cards or table
+- Airport taxi service section
+- Local service area section for Panchkula / Chandigarh / Mohali
+- Why choose us section
+- Booking steps section
+- FAQ section for SEO
+- Contact / address section with CTA
+- Sticky mobile CTA bar for call + WhatsApp
+
+6. SEO Targets
+- Primary keywords:
+  cab service in Panchkula
+  taxi service in Panchkula
+  cab service in Chandigarh
+  taxi service in Chandigarh
+  cab service in Mohali
+  Chandigarh to Delhi cab
+  Delhi to Chandigarh cab
+  Chandigarh airport taxi service
+  airport taxi service Panchkula
+  outstation cab Panchkula
+  cab service near me
+  taxi near me Panchkula
+- Supporting/local intent keywords:
+  best cab service in Panchkula
+  affordable taxi service Chandigarh
+  Panchkula to Delhi one way cab
+  Chandigarh to Delhi sedan booking
+  airport drop cab Chandigarh
+  Panchkula local taxi booking
+- SEO content must naturally mention:
+  Panchkula
+  Chandigarh
+  Mohali
+  Sector 20 Panchkula
+  Near Suncity
+- Important SEO implementation items:
+  keyword-focused title tag
+  compelling meta description
+  single clear H1
+  strong H2/H3 content hierarchy
+  FAQ schema-ready content
+  LocalBusiness / TaxiService schema suggestion
+  internal anchor navigation
+  location-rich copy without keyword stuffing
+  fast-loading page
+
+7. Conversion Strategy
+- Sticky CTA buttons on mobile.
+- WhatsApp CTA repeated in hero, pricing, and footer/contact section.
+- Click-to-call CTA repeated in hero and header.
+- Route pricing displayed early on page.
+- Trust lines such as:
+  transparent pricing
+  easy booking
+  punctual pickup
+  comfortable rides
+  city and airport coverage
+- Short booking flow:
+  call / WhatsApp
+  confirm route and car
+  get pickup on time
+
+8. Theme Direction
+- Visual goal: premium taxi + modern local service brand.
+- Suggested palette:
+  primary: taxi gold / amber
+  dark base: charcoal / graphite
+  support: warm ivory / soft sand
+  accent: deep green or muted teal for trust signals
+- Suggested feel:
+  bold hero
+  glossy route cards
+  subtle gradients
+  soft shadow depth
+  clean section spacing
+  not generic template-like
+- Suggested typography:
+  heading font: Sora or Space Grotesk
+  body font: DM Sans or Manrope
+- Background ideas:
+  layered gradients
+  soft map/grid pattern
+  abstract road-line motif
+
+9. Config Plan
+- Keep these values centralized in a config file:
+  business name
+  phone number
+  WhatsApp number
+  address
+  service areas
+  route pricing data
+  SEO metadata
+  CTA labels
+  FAQ items
+  trust highlights
+- This will allow easy updates without editing multiple UI files.
+
+10. Content We Can Safely Use Now
+- Brand name: Abhi Cab Service
+- Address line: Sector 20 Panchkula, near Suncity
+- Pricing listed above
+- SEO locations listed above
+
+11. Missing Details To Keep As Configurable Placeholders
+- Primary phone number
+- WhatsApp number
+- Business email (optional)
+- Operating hours
+- Whether 24x7 service should be shown
+- Real customer testimonials
+- Fleet photos / actual cab images
+- Google Maps link
+- Final brand logo
+
+12. Reference / Design Note
+- A Google share reference link was provided, but it could not be accessed from the current environment.
+- Until that reference is available, implementation should follow the visual goals described in this notes file and use the provided business requirements as source of truth.
+
+13. Recommended Build Approach
+- Use a modern SEO-friendly React framework.
+- Best fit for this project: Next.js with App Router + TypeScript + Tailwind CSS.
+- Reason:
+  strong SEO metadata support
+  excellent performance
+  easy component structure
+  easy deployment
+  simple config-driven architecture
+
+14. Initial Page Copy Direction
+- Hero headline example:
+  Reliable Cab Service in Panchkula, Chandigarh and Mohali
+- Hero support line example:
+  Book local, airport and outstation rides with transparent pricing, quick WhatsApp booking, and on-time pickup support.
+- Pricing section title example:
+  Popular Route Pricing
+- Local section title example:
+  Trusted Taxi Service Near You
+
+15. Implementation Priorities
+- Step 1: scaffold project
+- Step 2: create central config/data file
+- Step 3: build homepage sections
+- Step 4: add sticky call + WhatsApp CTA
+- Step 5: add SEO metadata and FAQ content
+- Step 6: optimize visuals and responsiveness
+- Step 7: final polish after real phone/WhatsApp details are added
