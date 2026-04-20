@@ -1,7 +1,19 @@
+import Image from "next/image";
+
 import { MobileCtaBar } from "@/components/mobile-cta-bar";
-import { SectionHeading } from "@/components/section-heading";
 import { SiteHeader } from "@/components/site-header";
-import { phoneHref, siteConfig, whatsappHref } from "@/data/site-config";
+import { WhatsAppIcon } from "@/components/whatsapp-icon";
+import { buildWhatsAppHref, phoneHref, siteConfig, whatsappHref } from "@/data/site-config";
+
+/* ─── Schema.org Structured Data ─────────────────────────────────────────── */
+function JsonLd({ data }: { data: object }) {
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+    />
+  );
+}
 
 export default function Home() {
   const localBusinessSchema = {
@@ -9,8 +21,15 @@ export default function Home() {
     "@type": "TaxiService",
     name: siteConfig.brand.name,
     description: siteConfig.seo.description,
-    areaServed: ["Panchkula", "Chandigarh", "Mohali", "Delhi"],
+    areaServed: [
+      { "@type": "City", name: "Panchkula" },
+      { "@type": "City", name: "Chandigarh" },
+      { "@type": "City", name: "Mohali" },
+      { "@type": "City", name: "Delhi" },
+    ],
     telephone: siteConfig.contact.phoneNumber,
+    url: "https://abhicabservice.com",
+    priceRange: "₹₹",
     address: {
       "@type": "PostalAddress",
       streetAddress: siteConfig.contact.address,
@@ -18,6 +37,18 @@ export default function Home() {
       addressRegion: "Haryana",
       addressCountry: "IN",
     },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: "30.6942",
+      longitude: "76.8606",
+    },
+    openingHoursSpecification: {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+      opens: "00:00",
+      closes: "23:59",
+    },
+    hasMap: `https://maps.google.com/?q=Sector+20+Panchkula+Near+Suncity`,
   };
 
   const faqSchema = {
@@ -26,314 +57,769 @@ export default function Home() {
     mainEntity: siteConfig.faqs.map((faq) => ({
       "@type": "Question",
       name: faq.question,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: faq.answer,
-      },
+      acceptedAnswer: { "@type": "Answer", text: faq.answer },
     })),
   };
 
+  const vehicleIcons: Record<string, string> = {
+    "Sedan": "🚗",
+    "SUV Ertiga": "🚙",
+    "Innova Crysta": "🚐",
+    "Innova Hycross Hybrid": "⚡",
+  };
+
+  const trustHighlights = [
+    { icon: "🕐", label: "On-Time Pickup", sub: "Always punctual" },
+    { icon: "💰", label: "Fare on Call", sub: "No hidden charges" },
+    { icon: "📱", label: "WhatsApp Booking", sub: "Reply in minutes" },
+    { icon: "🛡️", label: "Safe & Comfortable", sub: "Clean, AC cars" },
+  ];
+
+  const serviceAreas = [
+    { city: "Panchkula", icon: "📍", desc: "Local city rides, sector pickups & drops — our home base" },
+    { city: "Chandigarh", icon: "🏙️", desc: "City travels, airport runs & Delhi transfers from the City Beautiful" },
+    { city: "Mohali", icon: "🌆", desc: "IT park to airport, outstation & local taxi support" },
+  ];
+
   return (
-    <main className="page-shell">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
+    <main id="home" className="page-shell pt-[72px] sm:pt-[112px]">
+      <JsonLd data={localBusinessSchema} />
+      <JsonLd data={faqSchema} />
 
       <SiteHeader />
 
-      <section id="home" className="road-line">
-        <div className="mx-auto grid max-w-7xl gap-12 px-5 py-20 sm:px-6 md:py-24 lg:grid-cols-[1.2fr_0.8fr] lg:items-center lg:px-8">
-          <div className="space-y-8">
-            <span className="section-kicker">{siteConfig.brand.eyebrow}</span>
+      {/* ══════════════════════════════════════════════════════════════
+          HERO SECTION
+      ══════════════════════════════════════════════════════════════ */}
+      <section
+        className="relative overflow-hidden flex items-center"
+        style={{
+          minHeight: "auto",
+          background: "linear-gradient(135deg, #FFFBEC 0%, #FFF8E0 50%, #FFF3C0 100%)",
+        }}
+        aria-label="Hero – Trusted cab service in Panchkula and Chandigarh"
+      >
+        {/* Soft background blobs */}
+        <div className="absolute inset-0 pointer-events-none select-none" aria-hidden="true">
+          <div
+            className="absolute -top-20 -left-20 w-[500px] h-[500px] rounded-full opacity-30"
+            style={{ background: "radial-gradient(circle, #FFD84D 0%, transparent 70%)" }}
+          />
+          <div
+            className="absolute top-1/2 right-0 w-[400px] h-[400px] rounded-full opacity-20"
+            style={{ background: "radial-gradient(circle, #FFB800 0%, transparent 70%)" }}
+          />
+        </div>
 
-            <div className="space-y-5">
-              <h1 className="max-w-4xl text-5xl font-black leading-[0.95] tracking-tight text-[#f7f3e7] sm:text-6xl lg:text-7xl">
-                {siteConfig.brand.heroTitle}
-              </h1>
-              <p className="max-w-2xl text-lg leading-8 text-[#c7cfdb] sm:text-xl">
-                {siteConfig.brand.heroDescription} The page is optimized for Panchkula,
-                Chandigarh, Mohali, airport taxi service, Delhi route booking and near
-                me cab service discovery.
-              </p>
-            </div>
+        <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 py-7 sm:py-12 lg:pt-20 lg:pb-28">
+          <div className="grid lg:grid-cols-2 gap-4 sm:gap-8 lg:gap-4 items-center">
 
-            <div className="flex flex-wrap gap-3">
-              <a href={whatsappHref} className="cta-primary" target="_blank" rel="noreferrer">
-                Book Now on WhatsApp
-              </a>
-              <a href={phoneHref} className="cta-secondary">
-                Call for Instant Fare
-              </a>
-            </div>
+            {/* ── LEFT: Copy + CTAs ── */}
+            <div className="space-y-4 sm:space-y-5 max-w-xl max-sm:text-center max-sm:mx-auto">
 
-            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-              {siteConfig.highlights.map((highlight) => (
-                <div
-                  key={highlight}
-                  className="soft-panel rounded-2xl px-4 py-4 text-sm font-semibold text-[#f7f3e7]"
+              {/* Status pills */}
+              <div className="hero-animate hero-delay-1 hidden sm:flex flex-wrap items-center gap-2 max-sm:justify-center">
+                <span
+                  className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold"
+                  style={{
+                    background: "rgba(255,184,0,0.15)",
+                    border: "1.5px solid rgba(255,184,0,0.40)",
+                    color: "#7A4E00",
+                  }}
                 >
-                  {highlight}
-                </div>
-              ))}
-            </div>
-
-            <div className="grid gap-4 sm:grid-cols-3">
-              {siteConfig.stats.map((stat) => (
-                <div key={stat.label} className="glass-card rounded-3xl p-5">
-                  <p className="text-3xl font-black text-[#fff5d8]">{stat.value}</p>
-                  <p className="mt-2 text-sm leading-6 text-[#9aa5b5]">{stat.label}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="glass-card route-glow rounded-[2rem] p-5 sm:p-6 lg:p-7">
-            <div className="rounded-[1.6rem] border border-white/10 bg-[#07101a]/80 p-6">
-              <div className="flex flex-wrap items-start justify-between gap-4 border-b border-white/10 pb-6">
-                <div>
-                  <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#f6b93b]">
-                    Popular Route Pricing
-                  </p>
-                  <h2 className="mt-2 text-2xl font-black text-[#f7f3e7]">
-                    Transparent fares customers can see instantly
-                  </h2>
-                </div>
-                <span className="rounded-full border border-[#2ec4b6]/30 bg-[#2ec4b6]/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.15em] text-[#d5fffb]">
-                  Easy Booking Flow
+                  📍 Sector 20, Panchkula
+                </span>
+                <span
+                  className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold"
+                  style={{
+                    background: "rgba(31,138,85,0.10)",
+                    border: "1.5px solid rgba(31,138,85,0.28)",
+                    color: "#1F8A55",
+                  }}
+                >
+                  🟢 Available 24/7
                 </span>
               </div>
 
-              <div className="mt-6 space-y-4">
-                {siteConfig.routeFares.map((route) => (
-                  <div
-                    key={`${route.route}-${route.vehicle}`}
-                    className="soft-panel rounded-3xl px-5 py-5"
+              {/* Headline */}
+              <div className="hero-animate hero-delay-2">
+                <p
+                  className="text-xs sm:text-sm font-bold uppercase tracking-[0.14em] mb-3"
+                  style={{ color: "#9A6700" }}
+                >
+                  Panchkula · Chandigarh · Mohali · Delhi Routes
+                </p>
+                <h1
+                  className="display-xl leading-[1.06]"
+                  style={{ fontFamily: "var(--font-sora), 'Sora', sans-serif" }}
+                >
+                  Local, Airport &{" "}
+                  <span
+                    style={{
+                      background: "linear-gradient(135deg, #FFB800 0%, #D48A00 100%)",
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                      backgroundClip: "text",
+                    }}
                   >
-                    <div className="flex flex-wrap items-start justify-between gap-3">
-                      <div className="space-y-2">
-                        <p className="text-sm font-bold uppercase tracking-[0.14em] text-[#8c97a8]">
-                          {route.route}
-                        </p>
-                        <h3 className="text-xl font-black text-[#f7f3e7]">
-                          {route.vehicle}
-                        </h3>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-2xl font-black text-[#fff5d8]">{route.priceLabel}</p>
-                        {route.note ? (
-                          <p className="mt-1 text-sm text-[#c7cfdb]">{route.note}</p>
-                        ) : null}
-                      </div>
-                    </div>
-                  </div>
+                    Outstation Cab
+                  </span>
+                  <br />in Panchkula
+                </h1>
+                <p
+                  className="mt-4 text-base sm:text-lg leading-relaxed max-sm:mx-auto max-sm:max-w-[32ch]"
+                  style={{ color: "#4A4740" }}
+                >
+                  Call or WhatsApp for quick fare and on-time pickup.
+                </p>
+              </div>
+
+              {/* CTA Buttons */}
+              <div className="hero-animate hero-delay-3 hidden sm:flex flex-col sm:flex-row gap-3 sm:items-center">
+                <a
+                  href={whatsappHref}
+                  className="cta-whatsapp w-full sm:w-auto !text-base !py-[1rem] !px-7"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  id="hero-whatsapp-btn"
+                >
+                  <WhatsAppIcon />
+                  WhatsApp to Book
+                </a>
+                <a
+                  href={phoneHref}
+                  className="cta-primary w-full sm:w-auto !text-base !py-[1rem] !px-7"
+                  id="hero-call-btn"
+                >
+                  <span aria-hidden="true">📞</span>
+                  {siteConfig.contact.phoneLabel}
+                </a>
+              </div>
+
+              {/* Quick trust strip */}
+              <div className="hero-animate hero-delay-4 hidden sm:flex flex-wrap gap-2">
+                {[
+                  { icon: "🕐", label: "On-Time" },
+                  { icon: "💰", label: "Fare Confirmed" },
+                  { icon: "🛡️", label: "Safe & Clean" },
+                  { icon: "⚡", label: "Fast Reply" },
+                ].map((b) => (
+                  <span
+                    key={b.label}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold"
+                    style={{
+                      background: "rgba(255,255,255,0.85)",
+                      border: "1.5px solid rgba(26,23,20,0.10)",
+                      color: "#4A4740",
+                    }}
+                  >
+                    {b.icon} {b.label}
+                  </span>
                 ))}
               </div>
-
-              <div className="mt-6 rounded-3xl border border-[#f6b93b]/20 bg-[#f6b93b]/10 px-5 py-4 text-sm leading-7 text-[#fdf6de]">
-                Pricing is intentionally placed high on the page so users can compare
-                quickly and contact on WhatsApp without hunting for basic fare details.
-              </div>
             </div>
-          </div>
-        </div>
-      </section>
 
-      <section id="about" className="mx-auto max-w-7xl px-5 py-20 sm:px-6 lg:px-8">
-        <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-          <SectionHeading
-            kicker="About The Site"
-            title="Built to attract local cab customers, not just look good."
-            copy="This homepage balances modern visuals with city-level SEO content, route pricing visibility and strong call-to-action placement so visitors can book faster from mobile search."
-          />
-
-          <div className="glass-card rounded-[2rem] p-6 sm:p-8">
-            <div className="grid gap-4 sm:grid-cols-2">
-              {siteConfig.advantages.map((item) => (
-                <div
-                  key={item}
-                  className="rounded-3xl border border-white/10 bg-white/5 p-5 text-sm leading-7 text-[#c7cfdb]"
-                >
-                  {item}
+            {/* ── RIGHT: Car image + Fare card ── */}
+            <div className="hero-animate hero-delay-3 relative flex justify-center lg:justify-end max-sm:-mt-1">
+              {/* Car image — shifted slightly right on desktop */}
+              <div
+                className="relative w-full max-w-[560px] max-sm:max-w-[430px] lg:translate-x-8 xl:translate-x-14"
+                style={{ aspectRatio: "4/3" }}
+              >
+                <div className="relative w-full h-full rounded-[28px] sm:rounded-3xl overflow-hidden shadow-2xl">
+                  <Image
+                    src="/images/hero-cab-light.png"
+                    alt="Abhi Cab Service – white sedan taxi ready for pickup"
+                    fill
+                    priority
+                    sizes="(min-width: 1024px) 50vw, 100vw"
+                    className="object-cover object-[80%_65%]"
+                  />
+                  {/* Subtle vignette on left edge for blending */}
+                  <div
+                    className="absolute inset-y-0 left-0 w-24"
+                    style={{
+                      background: "linear-gradient(to right, rgba(255,251,236,0.85) 0%, transparent 100%)",
+                    }}
+                  />
                 </div>
-              ))}
-            </div>
-            <div className="section-divider my-7" />
-            <p className="text-base leading-8 text-[#f7f3e7]">
-              Address focus for local SEO: <span className="font-bold">{siteConfig.contact.address}</span>
-            </p>
-            <p className="mt-3 text-base leading-8 text-[#9aa5b5]">
-              This helps the page connect with intent like taxi service near me,
-              Panchkula cab service, Chandigarh airport taxi service and Delhi route
-              booking searches.
-            </p>
-          </div>
-        </div>
-      </section>
 
-      <section id="services" className="mx-auto max-w-7xl px-5 py-20 sm:px-6 lg:px-8">
-        <div className="space-y-10">
-          <SectionHeading
-            kicker="Services"
-            title="Sections aligned to how people actually search for cabs."
-            copy="The service layout covers airport taxi, outstation rides and local travel so the homepage stays relevant for both direct bookings and search discovery across nearby city intents."
-          />
-
-          <div className="grid gap-5 lg:grid-cols-3">
-            {siteConfig.services.map((service) => (
-              <article key={service.title} className="glass-card rounded-[2rem] p-7">
-                <div className="mb-5 inline-flex rounded-full border border-[#f6b93b]/20 bg-[#f6b93b]/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.16em] text-[#fff5d8]">
-                  {service.title}
-                </div>
-                <p className="text-base leading-8 text-[#c7cfdb]">{service.description}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="pricing" className="mx-auto max-w-7xl px-5 py-20 sm:px-6 lg:px-8">
-        <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
-          <SectionHeading
-            kicker="Pricing"
-            title="Dedicated fare section in the navigation, exactly as requested."
-            copy="Users can jump straight from the top menu to route pricing. This helps reduce friction for visitors comparing Delhi and Chandigarh route fares before calling or sending a message."
-          />
-
-          <div className="glass-card rounded-[2rem] p-6 sm:p-8">
-            <div className="overflow-hidden rounded-[1.5rem] border border-white/10">
-              <div className="grid grid-cols-[1.2fr_0.8fr_0.7fr] gap-4 bg-white/5 px-5 py-4 text-sm font-bold uppercase tracking-[0.12em] text-[#8c97a8]">
-                <span>Route</span>
-                <span>Vehicle</span>
-                <span className="text-right">Fare</span>
-              </div>
-              {siteConfig.routeFares.map((route) => (
+                {/* Fare card — overlaid bottom-left */}
                 <div
-                  key={`${route.route}-${route.vehicle}-table`}
-                  className="grid grid-cols-[1.2fr_0.8fr_0.7fr] gap-4 border-t border-white/10 px-5 py-5 text-sm sm:text-base"
+                  className="relative mt-4 mx-auto w-[90%] max-w-[300px] rounded-2xl overflow-hidden shadow-xl sm:w-[92%] sm:max-w-[320px] sm:absolute sm:-bottom-4 sm:-left-4 lg:-left-10 z-20"
+                  style={{
+                    background: "rgba(255,255,255,0.97)",
+                    border: "1.5px solid rgba(255,184,0,0.30)",
+                    minWidth: "0",
+                  }}
                 >
-                  <div className="text-[#f7f3e7]">
-                    <p className="font-bold">{route.route}</p>
-                    {route.note ? (
-                      <p className="mt-1 text-xs text-[#8c97a8]">{route.note}</p>
-                    ) : null}
+                  {/* header band */}
+                  <div
+                    className="px-4 py-2.5 flex items-center justify-between"
+                    style={{ background: "linear-gradient(135deg, #FFB800 0%, #E6A000 100%)" }}
+                  >
+                    <span
+                      className="text-xs font-extrabold uppercase tracking-wider text-[#1A1200]"
+                      style={{ fontFamily: "var(--font-sora), 'Sora', sans-serif" }}
+                    >
+                      🔖 Popular Routes
+                    </span>
+                    <span className="text-xs font-bold text-[#1A1200]/70">From</span>
                   </div>
-                  <div className="text-[#c7cfdb]">{route.vehicle}</div>
-                  <div className="text-right font-black text-[#fff5d8]">{route.priceLabel}</div>
+
+                  {/* fare rows */}
+                  <div className="px-3 pt-3 pb-2 sm:p-3 space-y-2">
+                    {siteConfig.routeFares.slice(0, 2).map((r, index) => (
+                      <div
+                        key={`${r.route}-${r.vehicle}`}
+                        className={`items-center justify-between gap-2 ${index > 0 ? "hidden sm:flex" : "flex"}`}
+                      >
+                        <div className="min-w-0">
+                          <p
+                            className="text-[0.75rem] font-bold leading-tight truncate"
+                            style={{ color: "#1A1714", fontFamily: "var(--font-sora), 'Sora', sans-serif" }}
+                          >
+                            {r.route}
+                          </p>
+                          <p className="text-[0.65rem]" style={{ color: "#9A9490" }}>
+                            {r.vehicle}
+                          </p>
+                        </div>
+                        <span
+                          className="flex-shrink-0 text-[0.75rem] font-extrabold px-2 py-0.5 rounded-md"
+                          style={{ background: "#FFB800", color: "#1A1200" }}
+                        >
+                          {r.priceLabel}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* CTA link */}
+                  <a
+                    href="#pricing"
+                    className="flex items-center justify-center gap-1.5 text-[0.7rem] sm:text-xs font-bold py-1.5 sm:py-2.5 w-full transition-colors"
+                    style={{
+                      background: "#FFF5D6",
+                      color: "#7A4E00",
+                    }}
+                  >
+                    <span className="sm:hidden">Show all</span>
+                    <span className="hidden sm:inline">See all fares</span>
+                  </a>
                 </div>
-              ))}
+
+                {/* Small "available now" bubble — top-right of car */}
+                <div
+                  className="hidden sm:flex absolute top-3 right-3 lg:top-4 lg:right-4 lg:-right-4 z-20 items-center gap-1.5 px-2.5 py-1.5 lg:px-3 lg:py-2 rounded-xl shadow-lg"
+                  style={{
+                    background: "rgba(255,255,255,0.97)",
+                    border: "1.5px solid rgba(31,138,85,0.25)",
+                  }}
+                >
+                  <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse flex-shrink-0" />
+                  <span className="text-xs font-bold" style={{ color: "#1F8A55" }}>
+                    Available Now
+                  </span>
+                </div>
+              </div>
             </div>
 
-            <div className="mt-6 flex flex-wrap gap-3">
-              <a href={phoneHref} className="cta-secondary">
-                Call to Confirm Fare
-              </a>
-              <a href={whatsappHref} className="cta-primary" target="_blank" rel="noreferrer">
-                Get Fare on WhatsApp
-              </a>
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════════════════════
+          MARQUEE TRUST BAR
+      ══════════════════════════════════════════════════════════════ */}
+      <div
+        className="overflow-hidden border-y py-3"
+        style={{ borderColor: "rgba(255,184,0,0.22)", background: "#FFF8E8" }}
+        aria-hidden="true"
+      >
+        <div className="marquee-track">
+          {[...Array(2)].fill(null).map((_, ri) =>
+            [
+              "✓ Panchkula to Delhi — Rs. 3700 Sedan",
+              "✓ Chandigarh Airport Taxi Available",
+              "✓ Innova Crysta — Rs. 6700",
+              "✓ Delhi to Chandigarh — Rs. 3500",
+              "✓ Book on WhatsApp Instantly",
+              "✓ Safe, Clean, On-Time Cars",
+              "✓ Sector 20 Panchkula | Near Suncity",
+            ].map((item) => (
+              <span
+                key={`${ri}-${item}`}
+                className="px-8 text-sm font-semibold whitespace-nowrap"
+                style={{ color: "#7A4E00" }}
+              >
+                {item}
+              </span>
+            ))
+          )}
+        </div>
+      </div>
+
+      {/* ══════════════════════════════════════════════════════════════
+          TRUST HIGHLIGHTS GRID
+      ══════════════════════════════════════════════════════════════ */}
+      <section
+        className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16"
+        aria-label="Why choose Abhi Cab Service"
+      >
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+          {trustHighlights.map((item) => (
+            <div
+              key={item.label}
+              className="card-warm flex flex-col items-center text-center p-6 gap-3 rounded-2xl"
+            >
+              <span className="text-3xl" aria-hidden="true">{item.icon}</span>
+              <div>
+                <p
+                  className="font-bold text-[0.92rem]"
+                  style={{
+                    fontFamily: "var(--font-sora), 'Sora', sans-serif",
+                    color: "#1A1714",
+                  }}
+                >
+                  {item.label}
+                </p>
+                <p className="text-xs mt-0.5" style={{ color: "#7A7570" }}>
+                  {item.sub}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════════════════════
+          ABOUT SECTION
+      ══════════════════════════════════════════════════════════════ */}
+      <section
+        id="about"
+        className="section-pad"
+        style={{ background: "var(--gray-50)" }}
+        aria-label="About Abhi Cab Service"
+      >
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
+            <div className="space-y-5">
+              <span className="section-kicker">About Us</span>
+              <h2
+                className="section-title"
+                style={{ fontFamily: "var(--font-sora), 'Sora', sans-serif" }}
+              >
+                Personal Cab Service Based in Sector 20, Panchkula
+              </h2>
+              <p className="text-base leading-relaxed" style={{ color: "#4A4740" }}>
+                Abhi Cab Service is a personal, dedicated taxi provider operating from{" "}
+                <strong>Sector 20, Panchkula, near Suncity</strong>. We specialise in
+                local city rides, Chandigarh airport taxi service, and popular outstation
+                routes like Panchkula to Delhi and Delhi to Chandigarh.
+              </p>
+              <p className="text-base leading-relaxed" style={{ color: "#4A4740" }}>
+                Unlike app-based aggregators, we offer a <em>personal</em> service
+                experience — you speak directly to the driver, confirm your fare upfront,
+                and get a clean, comfortable car on time. No surge pricing. No surprises.
+              </p>
+              <ul className="list-check list-none p-0 mt-5">
+                {siteConfig.advantages.slice(0, 4).map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Right: image collage */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="card overflow-hidden rounded-2xl col-span-2 aspect-video relative">
+                <Image
+                  src="/images/outstation-cab.png"
+                  alt="Outstation cab for Panchkula to Delhi route booking"
+                  fill
+                  sizes="(min-width: 1024px) 38vw, 100vw"
+                  className="object-cover object-center"
+                />
+              </div>
+              <div className="card overflow-hidden rounded-2xl aspect-[4/3] relative">
+                <Image
+                  src="/images/airport-cab.png"
+                  alt="Chandigarh airport taxi pickup service"
+                  fill
+                  sizes="(min-width: 1024px) 18vw, 50vw"
+                  className="object-cover object-center"
+                />
+                <div
+                  className="absolute bottom-0 left-0 right-0 p-3"
+                  style={{ background: "linear-gradient(to top, rgba(26,23,20,0.78) 0%, transparent)" }}
+                >
+                  <p className="text-xs font-bold text-white">✈ Airport Pickups</p>
+                </div>
+              </div>
+              <div
+                className="card-warm rounded-2xl p-4 flex flex-col justify-center"
+                style={{ minHeight: "120px" }}
+              >
+                <p
+                  className="text-[0.65rem] font-bold uppercase tracking-[0.12em] mb-1"
+                  style={{ color: "#9A6700" }}
+                >
+                  Based At
+                </p>
+                <p
+                  className="font-extrabold text-base leading-tight"
+                  style={{ fontFamily: "var(--font-sora), 'Sora', sans-serif", color: "#1A1714" }}
+                >
+                  Sector 20 Panchkula
+                </p>
+                <p className="text-sm mt-1" style={{ color: "#7A7570" }}>
+                  Near Suncity
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="service-areas" className="mx-auto max-w-7xl px-5 py-20 sm:px-6 lg:px-8">
-        <div className="space-y-10">
-          <SectionHeading
-            kicker="Service Areas"
-            title="Strong local city targeting for Panchkula, Chandigarh and Mohali."
-            copy="This section strengthens local relevance for city-wise searches and helps the website speak clearly to users searching for a taxi service near them."
-          />
+      {/* ══════════════════════════════════════════════════════════════
+          SERVICES SECTION
+      ══════════════════════════════════════════════════════════════ */}
+      <section
+        id="services"
+        className="section-pad"
+        aria-label="Cab services offered"
+      >
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12 space-y-3">
+            <span className="section-kicker">Our Services</span>
+            <h2
+              className="section-title"
+              style={{ fontFamily: "var(--font-sora), 'Sora', sans-serif" }}
+            >
+              Taxi Services We Offer
+            </h2>
+            <p className="text-base text-[#7A7570] max-w-xl mx-auto">
+              Airport pickups, Delhi route cabs, city travel — simple WhatsApp booking for all rides.
+            </p>
+          </div>
 
-          <div className="grid gap-5 md:grid-cols-3">
-            {siteConfig.serviceAreas.map((area) => (
-              <article key={area.name} className="glass-card rounded-[2rem] p-7">
-                <h3 className="text-2xl font-black text-[#fff5d8]">{area.name}</h3>
-                <p className="mt-4 text-base leading-8 text-[#c7cfdb]">{area.copy}</p>
+          <div className="grid gap-6 md:grid-cols-3">
+            {siteConfig.services.map((service) => (
+              <article
+                key={service.title}
+                className="card overflow-hidden rounded-2xl group"
+              >
+                <div className="relative aspect-[16/10] overflow-hidden">
+                  <Image
+                    src={service.image}
+                    alt={service.alt}
+                    fill
+                    sizes="(min-width: 1024px) 28vw, 100vw"
+                    className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div
+                    className="absolute left-4 top-4 rounded-full px-3 py-1 text-xs font-bold"
+                    style={{
+                      background: "rgba(255,184,0,0.90)",
+                      color: "#1A1200",
+                      backdropFilter: "blur(4px)",
+                    }}
+                  >
+                    {service.badge}
+                  </div>
+                </div>
+                <div className="p-5">
+                  <h3
+                    className="font-bold text-lg mb-2"
+                    style={{
+                      fontFamily: "var(--font-sora), 'Sora', sans-serif",
+                      color: "#1A1714",
+                    }}
+                  >
+                    {service.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed" style={{ color: "#7A7570" }}>
+                    {service.description}
+                  </p>
+                  <a
+                    href={buildWhatsAppHref(service.whatsappMessage)}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="cta-primary mt-5 inline-flex items-center justify-center gap-2 !px-5 !py-3 text-sm"
+                    style={{ boxShadow: "0 12px 24px rgba(255,184,0,0.22)" }}
+                  >
+                    Book this ride <span aria-hidden="true">→</span>
+                  </a>
+                </div>
               </article>
             ))}
           </div>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-7xl px-5 py-20 sm:px-6 lg:px-8">
-        <div className="grid gap-10 lg:grid-cols-[1fr_1fr]">
-          <div className="glass-card rounded-[2rem] p-7 sm:p-8">
-            <SectionHeading
-              kicker="Booking Steps"
-              title="Simple, low-friction inquiry flow"
-              copy="The page encourages fast action by making the booking path easy to understand even for first-time visitors."
-            />
-            <ol className="mt-8 grid gap-4">
-              {siteConfig.bookingSteps.map((step, index) => (
-                <li
-                  key={step}
-                  className="rounded-3xl border border-white/10 bg-white/5 px-5 py-5 text-base leading-7 text-[#c7cfdb]"
-                >
-                  <span className="mb-3 inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#f6b93b] font-black text-[#16120b]">
-                    {index + 1}
-                  </span>
-                  <p>{step}</p>
-                </li>
-              ))}
-            </ol>
-          </div>
-
-          <div className="glass-card rounded-[2rem] p-7 sm:p-8">
-            <SectionHeading
-              kicker="Why It Converts"
-              title="Built for trust signals and direct action"
-              copy={siteConfig.brand.trustLine}
-            />
-            <ul className="list-check mt-8 list-none p-0">
-              {siteConfig.advantages.map((item) => (
-                <li key={`trust-${item}`}>{item}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-7xl px-5 py-20 sm:px-6 lg:px-8">
-        <div className="glass-card rounded-[2.2rem] p-7 sm:p-10">
-          <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-            <SectionHeading
-              kicker="Near Me SEO"
-              title="Content written to support local cab service near me discovery."
-              copy="The homepage naturally blends place names, route terms and service intent so it can compete for local taxi searches without reading like spam."
-            />
-
-            <div className="grid gap-4 sm:grid-cols-2">
-              {siteConfig.seo.keywords.map((keyword) => (
+          {/* Service areas integrated into services */}
+          <div className="mt-20 border-t border-[rgba(26,23,20,0.08)] pt-16">
+            <div className="mx-auto mb-10 max-w-2xl text-center">
+              <span className="section-kicker">Service Coverage</span>
+              <h3
+                className="mt-4 text-2xl font-extrabold sm:text-3xl"
+                style={{ fontFamily: "var(--font-sora), 'Sora', sans-serif", color: "#1A1714" }}
+              >
+                Fast Pickup Support Across Tricity & Nearby Routes
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-[#7A7570] sm:text-[0.95rem]">
+                From local sector pickups to airport runs and outstation travel, we stay available
+                for quick cab support across the areas people book most often.
+              </p>
+            </div>
+            <div className="grid gap-5 md:grid-cols-3">
+              {serviceAreas.map((area) => (
                 <div
-                  key={keyword}
-                  className="rounded-3xl border border-white/10 bg-white/5 px-5 py-4 text-sm font-semibold text-[#f7f3e7]"
+                  key={area.city}
+                  className="card-warm group p-6 text-center space-y-3 rounded-2xl"
+                  style={{
+                    background: "linear-gradient(180deg, #FFFDF6 0%, #FFF7E6 100%)",
+                    border: "1.5px solid rgba(255,184,0,0.18)",
+                  }}
                 >
-                  {keyword}
+                  <div
+                    className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl text-3xl transition-transform duration-300 group-hover:-translate-y-1"
+                    style={{
+                      background: "rgba(255,184,0,0.14)",
+                      border: "1px solid rgba(255,184,0,0.22)",
+                    }}
+                  >
+                    <span aria-hidden="true">{area.icon}</span>
+                  </div>
+                  <div className="space-y-1.5">
+                    <p
+                      className="font-bold text-[1.02rem]"
+                      style={{ color: "#1A1714", fontFamily: "var(--font-sora), 'Sora', sans-serif" }}
+                    >
+                      {area.city}
+                    </p>
+                    <p className="text-xs font-semibold uppercase tracking-[0.12em]" style={{ color: "#9A6700" }}>
+                      Quick Cab Support
+                    </p>
+                  </div>
+                  <p className="text-sm leading-relaxed" style={{ color: "#6F6A63" }}>{area.desc}</p>
                 </div>
+              ))}
+            </div>
+
+            {/* Keyword chips for SEO */}
+            <div className="mt-12 flex flex-wrap justify-center gap-2.5">
+              {siteConfig.seo.keywords.slice(0, 8).map((kw) => (
+                <span key={kw} className="area-chip" style={{ background: "#FFFDF8" }}>
+                  {kw}
+                </span>
               ))}
             </div>
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-5 py-20 sm:px-6 lg:px-8">
-        <div className="space-y-10">
-          <SectionHeading
-            kicker="FAQ"
-            title="Helpful answers that also support SEO depth"
-            copy="Frequently asked questions give the site additional keyword coverage and make the page more useful to high-intent visitors."
-          />
+      {/* ══════════════════════════════════════════════════════════════
+          PRICING SECTION
+      ══════════════════════════════════════════════════════════════ */}
+      <section
+        id="pricing"
+        className="section-pad"
+        style={{ background: "var(--yellow-pale)" }}
+        aria-label="Route pricing and fare chart"
+      >
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12 space-y-3">
+            <span className="section-kicker">Fare Info</span>
+            <h2
+              className="section-title"
+              style={{ fontFamily: "var(--font-sora), 'Sora', sans-serif" }}
+            >
+              Popular Route Fares
+            </h2>
+            <p className="text-base text-[#7A7570] max-w-lg mx-auto">
+              Quick fare idea before you book.
+            </p>
+          </div>
 
-          <div className="grid gap-5">
+          <div className="max-w-3xl mx-auto space-y-3">
+            {siteConfig.routeFares.map((route) => (
+              <div
+                key={`${route.route}-${route.vehicle}`}
+                className="price-card"
+              >
+                <div className="flex items-center gap-3 flex-1 min-w-0">
+                  <span className="vehicle-icon-pill flex-shrink-0" aria-hidden="true">
+                    {vehicleIcons[route.vehicle] ?? "🚗"}
+                  </span>
+                  <div className="min-w-0">
+                    <p
+                      className="font-bold text-[0.95rem] truncate"
+                      style={{
+                        fontFamily: "var(--font-sora), 'Sora', sans-serif",
+                        color: "#1A1714",
+                      }}
+                    >
+                      {route.route}
+                    </p>
+                    <div className="mt-1 flex flex-wrap items-center gap-2">
+                      <span className="vehicle-pill">{route.vehicle}</span>
+                      {route.note ? (
+                        <span className="text-xs" style={{ color: "#7A7570" }}>
+                          {route.note}
+                        </span>
+                      ) : null}
+                    </div>
+                  </div>
+                </div>
+                <div className="flex-shrink-0">
+                  <span className="price-tag-yellow">
+                    {route.priceLabel}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-10 flex flex-wrap justify-center gap-3">
+            <a
+              href={whatsappHref}
+              className="cta-whatsapp"
+              target="_blank"
+              rel="noreferrer noopener"
+              id="pricing-whatsapp-btn"
+            >
+              <WhatsAppIcon /> Ask Fare on WhatsApp
+            </a>
+            <a href={phoneHref} className="cta-secondary" id="pricing-call-btn" style={{ background: 'white' }}>
+              <span aria-hidden="true">📞</span> Call to Confirm
+            </a>
+          </div>
+
+          <p className="text-center text-xs mt-5" style={{ color: "#AAA49C" }}>
+            * Fares are indicative. Confirm via WhatsApp or call before booking.
+          </p>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════════════════════
+          BOOKING STEPS + WHY US
+      ══════════════════════════════════════════════════════════════ */}
+      <section
+        className="section-pad"
+        style={{ background: "var(--gray-50)" }}
+        aria-label="How to book a cab"
+      >
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-10 lg:grid-cols-2 lg:items-start">
+            {/* Booking Steps */}
+            <div
+              className="card rounded-2xl p-7 sm:p-8"
+              style={{ border: "1.5px solid var(--border)" }}
+            >
+              <span className="section-kicker mb-5 inline-flex">3 Steps to Book</span>
+              <h2
+                className="section-title mb-6"
+                style={{ fontFamily: "var(--font-sora), 'Sora', sans-serif" }}
+              >
+                Book Your Cab in Minutes
+              </h2>
+              <ol className="space-y-4">
+                {siteConfig.bookingSteps.map((step, i) => (
+                  <li
+                    key={step}
+                    className="flex items-start gap-4 p-4 rounded-xl"
+                    style={{ background: "var(--gray-50)" }}
+                  >
+                    <span className="step-number flex-shrink-0">{i + 1}</span>
+                    <p className="text-[0.95rem] leading-relaxed pt-0.5" style={{ color: "#4A4740" }}>
+                      {step}
+                    </p>
+                  </li>
+                ))}
+              </ol>
+              <div className="mt-7 flex flex-wrap gap-3">
+                <a
+                  href={whatsappHref}
+                  className="cta-whatsapp"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  id="steps-whatsapp-btn"
+                >
+                  <WhatsAppIcon /> WhatsApp Booking
+                </a>
+                <a href={phoneHref} className="cta-secondary" id="steps-call-btn">
+                  <span aria-hidden="true">📞</span> Call Now
+                </a>
+              </div>
+            </div>
+
+            {/* Why Choose Us */}
+            <div
+              className="card-warm rounded-2xl p-7 sm:p-8"
+              style={{ border: "1.5px solid rgba(255,184,0,0.22)" }}
+            >
+              <span className="section-kicker mb-5 inline-flex">Why Choose Us</span>
+              <h2
+                className="section-title mb-6"
+                style={{ fontFamily: "var(--font-sora), 'Sora', sans-serif" }}
+              >
+                Personal Service You Can Trust
+              </h2>
+              <ul className="list-check list-none p-0">
+                {siteConfig.advantages.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════════════════════
+          FAQ SECTION
+      ══════════════════════════════════════════════════════════════ */}
+      <section
+        className="section-pad"
+        aria-label="Frequently asked questions about cab service"
+      >
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12 space-y-3">
+            <span className="section-kicker">FAQ</span>
+            <h2
+              className="section-title"
+              style={{ fontFamily: "var(--font-sora), 'Sora', sans-serif" }}
+            >
+              Common Questions
+            </h2>
+            <p className="text-base text-[#7A7570] max-w-lg mx-auto">
+              Quick answers to help you book with confidence.
+            </p>
+          </div>
+
+          <div className="max-w-3xl mx-auto space-y-4">
             {siteConfig.faqs.map((faq) => (
-              <article key={faq.question} className="glass-card rounded-[2rem] p-6 sm:p-7">
-                <h3 className="text-xl font-black text-[#f7f3e7]">{faq.question}</h3>
-                <p className="mt-3 max-w-4xl text-base leading-8 text-[#c7cfdb]">
-                  {faq.answer}
+              <article
+                key={faq.question}
+                className="card rounded-2xl p-6"
+                itemScope
+                itemType="https://schema.org/Question"
+              >
+                <h3
+                  className="font-bold text-[1rem] mb-2"
+                  style={{
+                    fontFamily: "var(--font-sora), 'Sora', sans-serif",
+                    color: "#1A1714",
+                  }}
+                  itemProp="name"
+                >
+                  {faq.question}
+                </h3>
+                <p
+                  className="text-sm leading-relaxed"
+                  style={{ color: "#7A7570" }}
+                  itemScope
+                  itemType="https://schema.org/Answer"
+                  itemProp="acceptedAnswer"
+                >
+                  <span itemProp="text">{faq.answer}</span>
                 </p>
               </article>
             ))}
@@ -341,57 +827,106 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="contact" className="mx-auto max-w-7xl px-5 py-20 sm:px-6 lg:px-8">
-        <div className="glass-card rounded-[2.5rem] p-7 sm:p-10">
-          <div className="grid gap-10 lg:grid-cols-[1fr_0.9fr] lg:items-center">
-            <div className="space-y-6">
-              <span className="section-kicker">Contact</span>
-              <h2 className="max-w-3xl text-4xl font-black tracking-tight text-[#f7f3e7] sm:text-5xl">
-                Make inquiry fast with a call button and WhatsApp deep link.
-              </h2>
-              <p className="max-w-2xl text-lg leading-8 text-[#c7cfdb]">
-                Replace the placeholder number in the config and the full site will be
-                ready for real inquiries. Address visibility also helps with local
-                trust and search relevance.
-              </p>
-            </div>
-
-            <div className="soft-panel rounded-[2rem] p-6 sm:p-7">
+      {/* ══════════════════════════════════════════════════════════════
+          CONTACT / CTA SECTION
+      ══════════════════════════════════════════════════════════════ */}
+      <section
+        id="contact"
+        className="section-pad"
+        style={{ background: "var(--yellow-pale)" }}
+        aria-label="Contact and booking"
+      >
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div
+            className="rounded-3xl overflow-hidden"
+            style={{
+              background: "linear-gradient(135deg, #FFB800 0%, #E6A000 60%, #D4920A 100%)",
+              boxShadow: "0 24px 60px rgba(255,184,0,0.32)",
+            }}
+          >
+            <div className="p-8 sm:p-12 grid gap-10 lg:grid-cols-2 lg:items-center">
               <div className="space-y-5">
-                <div>
-                  <p className="text-sm font-bold uppercase tracking-[0.15em] text-[#8c97a8]">
-                    Location
-                  </p>
-                  <p className="mt-2 text-xl font-black text-[#fff5d8]">
-                    {siteConfig.contact.address}
-                  </p>
-                </div>
-                <div className="section-divider" />
-                <div>
-                  <p className="text-sm font-bold uppercase tracking-[0.15em] text-[#8c97a8]">
-                    Call
-                  </p>
-                  <a href={phoneHref} className="mt-2 block text-xl font-black text-[#f7f3e7]">
+                <h2
+                  className="text-3xl sm:text-4xl font-extrabold text-[#1A1200] leading-tight"
+                  style={{ fontFamily: "var(--font-sora), 'Sora', sans-serif" }}
+                >
+                  Ready to Book Your Cab?
+                </h2>
+                <p className="text-base leading-relaxed text-[#3A2A00]">
+                  Call us or send a WhatsApp message for instant fare confirmation and same-day booking.
+                  Available for Panchkula, Chandigarh, Mohali, airport pickups and Delhi routes.
+                </p>
+                <div className="flex flex-wrap gap-3">
+                  <a
+                    href={whatsappHref}
+                    className="order-2 sm:order-1 cta-whatsapp !px-6 !py-3 text-[0.95rem]"
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    id="contact-whatsapp-btn"
+                  >
+                    <WhatsAppIcon /> WhatsApp Now
+                  </a>
+                  <a
+                    href={phoneHref}
+                    className="order-1 sm:order-2 inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-[0.95rem] transition-all"
+                    style={{
+                      background: "rgba(255,255,255,0.92)",
+                      color: "#1A1200",
+                      boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
+                    }}
+                    id="contact-call-btn"
+                  >
+                    <span aria-hidden="true" className="pulse-dot">📞</span>
                     {siteConfig.contact.phoneLabel}
                   </a>
                 </div>
+              </div>
+
+              <div
+                className="rounded-2xl p-6 space-y-4"
+                style={{
+                  background: "rgba(255,255,255,0.22)",
+                  border: "1.5px solid rgba(255,255,255,0.40)",
+                  backdropFilter: "blur(8px)",
+                }}
+              >
                 <div>
-                  <p className="text-sm font-bold uppercase tracking-[0.15em] text-[#8c97a8]">
-                    Quick Action
+                  <p
+                    className="text-[0.65rem] font-bold uppercase tracking-[0.14em] mb-1"
+                    style={{ color: "rgba(26,18,0,0.60)" }}
+                  >
+                    Our Location
                   </p>
-                  <div className="mt-3 flex flex-wrap gap-3">
-                    <a href={phoneHref} className="cta-secondary">
-                      Call Now
-                    </a>
-                    <a
-                      href={whatsappHref}
-                      className="cta-primary"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      WhatsApp Booking
-                    </a>
-                  </div>
+                  <p className="font-extrabold text-lg text-[#1A1200]">
+                    {siteConfig.contact.address}
+                  </p>
+                </div>
+                <div className="h-px" style={{ background: "rgba(26,18,0,0.15)" }} />
+                <div>
+                  <p
+                    className="text-[0.65rem] font-bold uppercase tracking-[0.14em] mb-1"
+                    style={{ color: "rgba(26,18,0,0.60)" }}
+                  >
+                    Phone / WhatsApp
+                  </p>
+                  <a
+                    href={phoneHref}
+                    className="font-extrabold text-lg text-[#1A1200] hover:underline"
+                  >
+                    {siteConfig.contact.phoneLabel}
+                  </a>
+                </div>
+                <div className="h-px" style={{ background: "rgba(26,18,0,0.15)" }} />
+                <div>
+                  <p
+                    className="text-[0.65rem] font-bold uppercase tracking-[0.14em] mb-1"
+                    style={{ color: "rgba(26,18,0,0.60)" }}
+                  >
+                    Coverage
+                  </p>
+                  <p className="font-semibold text-[0.92rem] text-[#1A1200]">
+                    Panchkula · Chandigarh · Mohali · Delhi Routes · Airport
+                  </p>
                 </div>
               </div>
             </div>
@@ -399,15 +934,34 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="border-t border-white/10 pb-28 pt-10 md:pb-10">
-        <div className="mx-auto flex max-w-7xl flex-col gap-4 px-5 text-sm text-[#8c97a8] sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
-          <p>
-            {siteConfig.brand.name} | {siteConfig.contact.address}
-          </p>
-          <p>
-            Optimized for Panchkula, Chandigarh, Mohali, airport taxi service and
-            Delhi route bookings.
-          </p>
+      {/* ══════════════════════════════════════════════════════════════
+          FOOTER
+      ══════════════════════════════════════════════════════════════ */}
+      <footer
+        className="border-t pb-6"
+        style={{ borderColor: "var(--border)", background: "#FAFAF8" }}
+        role="contentinfo"
+      >
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+              <p
+                className="font-extrabold text-base"
+                style={{
+                  fontFamily: "var(--font-sora), 'Sora', sans-serif",
+                  color: "#1A1714",
+                }}
+              >
+                🚕 {siteConfig.brand.name}
+              </p>
+              <p className="text-xs mt-0.5" style={{ color: "#AAA49C" }}>
+                {siteConfig.contact.address}
+              </p>
+            </div>
+            <p className="text-xs" style={{ color: "#AAA49C" }}>
+              Cab service in Panchkula, Chandigarh, Mohali · Airport taxi · Delhi routes
+            </p>
+          </div>
         </div>
       </footer>
 

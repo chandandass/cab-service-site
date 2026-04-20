@@ -16,14 +16,14 @@ export type NavigationItem = {
   featured?: boolean;
 };
 
-export type StatItem = {
-  value: string;
-  label: string;
-};
 
 export type ServiceItem = {
   title: string;
   description: string;
+  image: string;
+  alt: string;
+  badge: string;
+  whatsappMessage: string;
 };
 
 export type ServiceArea = {
@@ -31,20 +31,15 @@ export type ServiceArea = {
   copy: string;
 };
 
+
 const navigation: NavigationItem[] = [
-  { label: "Home", href: "#home" },
-  { label: "About", href: "#about" },
+  { label: "Home",     href: "#home" },
   { label: "Services", href: "#services" },
-  { label: "Pricing", href: "#pricing", featured: true },
-  { label: "Service Areas", href: "#service-areas" },
-  { label: "Contact", href: "#contact" },
+  { label: "Pricing",  href: "#pricing", featured: true },
+  { label: "About",    href: "#about" },
+  { label: "Contact",  href: "#contact" },
 ];
 
-const stats: StatItem[] = [
-  { value: "24x7", label: "Booking availability can be shown once confirmed" },
-  { value: "5+", label: "Popular route pricing cards already ready" },
-  { value: "3", label: "Core local zones: Panchkula, Chandigarh, Mohali" },
-];
 
 const routeFares: RouteFare[] = [
   {
@@ -80,18 +75,34 @@ const services: ServiceItem[] = [
     title: "Airport Taxi Service",
     description:
       "Smooth airport drop and pickup support for Chandigarh Airport with direct call and WhatsApp booking.",
+    image: "/images/airport-cab.png",
+    alt: "Airport taxi cab ready for pickup near Chandigarh airport terminal",
+    badge: "Airport Pickup",
+    whatsappMessage:
+      "Hi, I need an airport taxi. Please share fare and availability.",
   },
   {
     title: "Outstation Cabs",
     description:
       "Comfortable rides for Delhi, nearby cities and planned route bookings with clear pricing visibility.",
+    image: "/images/outstation-cab.png",
+    alt: "Outstation taxi cab on a highway route for Delhi travel",
+    badge: "Delhi Routes",
+    whatsappMessage:
+      "Hi, I need an outstation cab. Please share fare and available car options.",
   },
   {
     title: "Local City Travel",
     description:
       "Dependable taxi support for Panchkula, Chandigarh and Mohali for personal visits, errands and day travel.",
+    image: "/images/hero-cab.png",
+    alt: "Local taxi sedan on a clean city road in Panchkula or Chandigarh",
+    badge: "City Rides",
+    whatsappMessage:
+      "Hi, I need a local cab. Please share fare and availability.",
   },
 ];
+
 
 const serviceAreas: ServiceArea[] = [
   {
@@ -139,22 +150,23 @@ const faqs: FaqItem[] = [
   },
 ];
 
+
 export const siteConfig = {
   brand: {
     name: "Abhi Cab Service",
-    eyebrow: "Panchkula, Chandigarh, Mohali, Airport and Delhi Routes",
-    heroTitle: "Reliable Cab Service in Panchkula, Chandigarh and Mohali",
+    eyebrow: "Local, Airport and Delhi Route Cab Booking",
+    heroTitle: "Trusted Cab Service in Panchkula, Chandigarh and Mohali",
     heroDescription:
-      "Book local, airport and outstation rides with transparent pricing, fast WhatsApp support and on-time pickup for Delhi and nearby routes.",
-    trustLine: "Transparent fares, quick booking, comfortable rides and responsive local support.",
+      "Book local rides, Chandigarh airport pickup and Delhi route cabs with quick WhatsApp support and on-time pickup.",
+    trustLine: "Quick booking, clean cars and responsive local support.",
   },
   contact: {
-    phoneNumber: "+919999999999",
-    phoneLabel: "+91 99999 99999",
-    whatsappNumber: "919999999999",
+    phoneNumber: "+919988256290",
+    phoneLabel: "+91 99882 56290",
+    whatsappNumber: "919988256290",
     whatsappLabel: "Book on WhatsApp",
     whatsappMessage:
-      "Hello Abhi Cab Service, I want to book a cab. Please share the best fare and available car options.",
+      "Hi, I need a cab. Please share fare and availability.",
     address: "Sector 20, Panchkula, near Suncity",
     mapsLabel: "Sector 20 Panchkula, Near Suncity",
   },
@@ -180,16 +192,15 @@ export const siteConfig = {
   navigation,
   highlights: [
     "Fast WhatsApp booking",
-    "Transparent route pricing",
-    "Airport and outstation rides",
-    "Responsive local support",
+    "Clean car feel",
+    "Fare confirmation",
+    "On-time pickup support",
   ],
-  stats,
   routeFares,
   services,
   serviceAreas,
   advantages: [
-    "Popular route fares shown clearly before inquiry",
+    "Popular route fare examples before inquiry",
     "Dedicated pricing section in the top navigation",
     "Clean, modern and mobile-first layout",
     "Strong local SEO copy for city and near me searches",
@@ -209,3 +220,7 @@ export const phoneHref = `tel:${siteConfig.contact.phoneNumber}`;
 export const whatsappHref = `https://wa.me/${siteConfig.contact.whatsappNumber}?text=${encodeURIComponent(
   siteConfig.contact.whatsappMessage,
 )}`;
+
+export function buildWhatsAppHref(message: string) {
+  return `https://wa.me/${siteConfig.contact.whatsappNumber}?text=${encodeURIComponent(message)}`;
+}
