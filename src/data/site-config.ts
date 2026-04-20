@@ -174,6 +174,7 @@ export const siteConfig = {
     title: "Cab Service in Panchkula, Chandigarh and Mohali | Abhi Cab Service",
     description:
       "Abhi Cab Service offers local, airport and outstation taxi booking in Panchkula, Chandigarh and Mohali with route pricing for Chandigarh to Delhi and Delhi to Chandigarh rides.",
+    ogImage: "/images/og-cover.png",
     keywords: [
       "cab service in Panchkula",
       "taxi service in Panchkula",

@@ -14,6 +14,7 @@ export const localBusinessSchema = {
   "@type": "TaxiService",
   name: siteConfig.brand.name,
   description: siteConfig.seo.description,
+  image: `https://abhicabservice.qrkar.in${siteConfig.seo.ogImage}`,
   areaServed: [
     { "@type": "City", name: "Panchkula" },
     { "@type": "City", name: "Chandigarh" },
