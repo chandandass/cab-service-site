@@ -1,5 +1,7 @@
 import type { MetadataRoute } from "next";
 
+import { absoluteUrl } from "@/data/site-config";
+
 export const dynamic = "force-static";
 
 
@@ -9,6 +11,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://abhicabservice.qrkar.in/sitemap.xml",
+    sitemap: absoluteUrl("/sitemap.xml"),
   };
 }

@@ -152,6 +152,7 @@ const faqs: FaqItem[] = [
 
 
 export const siteConfig = {
+  siteUrl: "https://abhicabservice.vercel.app",
   brand: {
     name: "Abhi Cab Service",
     eyebrow: "Local, Airport and Delhi Route Cab Booking",
@@ -221,6 +222,10 @@ export const phoneHref = `tel:${siteConfig.contact.phoneNumber}`;
 export const whatsappHref = `https://wa.me/${siteConfig.contact.whatsappNumber}?text=${encodeURIComponent(
   siteConfig.contact.whatsappMessage,
 )}`;
+
+export function absoluteUrl(path: string) {
+  return new URL(path, siteConfig.siteUrl).toString();
+}
 
 export function buildWhatsAppHref(message: string) {
   return `https://wa.me/${siteConfig.contact.whatsappNumber}?text=${encodeURIComponent(message)}`;

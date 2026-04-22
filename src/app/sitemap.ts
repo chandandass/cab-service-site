@@ -1,12 +1,14 @@
 import type { MetadataRoute } from "next";
 
+import { siteConfig } from "@/data/site-config";
+
 export const dynamic = "force-static";
 
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: "https://abhicabservice.qrkar.in",
+      url: siteConfig.siteUrl,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 1,

@@ -1,4 +1,4 @@
-import { siteConfig } from "@/data/site-config";
+import { absoluteUrl, siteConfig } from "@/data/site-config";
 
 export function JsonLd({ data }: { data: object }) {
   return (
@@ -14,7 +14,7 @@ export const localBusinessSchema = {
   "@type": "TaxiService",
   name: siteConfig.brand.name,
   description: siteConfig.seo.description,
-  image: `https://abhicabservice.qrkar.in${siteConfig.seo.ogImage}`,
+  image: absoluteUrl(siteConfig.seo.ogImage),
   areaServed: [
     { "@type": "City", name: "Panchkula" },
     { "@type": "City", name: "Chandigarh" },
@@ -22,7 +22,7 @@ export const localBusinessSchema = {
     { "@type": "City", name: "Delhi" },
   ],
   telephone: siteConfig.contact.phoneNumber,
-  url: "https://abhicabservice.qrkar.in",
+  url: siteConfig.siteUrl,
   priceRange: "₹₹",
   address: {
     "@type": "PostalAddress",

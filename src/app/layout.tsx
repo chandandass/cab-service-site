@@ -25,12 +25,17 @@ export const metadata: Metadata = {
   keywords: siteConfig.seo.keywords,
   applicationName: siteConfig.brand.name,
   category: "travel",
+  metadataBase: new URL(siteConfig.siteUrl),
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: siteConfig.seo.title,
     description: siteConfig.seo.description,
     siteName: siteConfig.brand.name,
     type: "website",
     locale: "en_IN",
+    url: siteConfig.siteUrl,
     images: [
       {
         url: siteConfig.seo.ogImage,

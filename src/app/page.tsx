@@ -3,7 +3,7 @@ import Image from "next/image";
 import { MobileCtaBar } from "@/components/mobile-cta-bar";
 import { SiteHeader } from "@/components/site-header";
 import { WhatsAppIcon } from "@/components/whatsapp-icon";
-import { buildWhatsAppHref, phoneHref, siteConfig, whatsappHref } from "@/data/site-config";
+import { absoluteUrl, buildWhatsAppHref, phoneHref, siteConfig, whatsappHref } from "@/data/site-config";
 
 /* ─── Schema.org Structured Data ─────────────────────────────────────────── */
 function JsonLd({ data }: { data: object }) {
@@ -21,6 +21,7 @@ export default function Home() {
     "@type": "TaxiService",
     name: siteConfig.brand.name,
     description: siteConfig.seo.description,
+    image: absoluteUrl(siteConfig.seo.ogImage),
     areaServed: [
       { "@type": "City", name: "Panchkula" },
       { "@type": "City", name: "Chandigarh" },
@@ -28,7 +29,7 @@ export default function Home() {
       { "@type": "City", name: "Delhi" },
     ],
     telephone: siteConfig.contact.phoneNumber,
-    url: "https://abhicabservice.com",
+    url: siteConfig.siteUrl,
     priceRange: "₹₹",
     address: {
       "@type": "PostalAddress",
