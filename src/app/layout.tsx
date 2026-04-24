@@ -26,6 +26,9 @@ export const metadata: Metadata = {
   applicationName: siteConfig.brand.name,
   category: "travel",
   metadataBase: new URL(siteConfig.siteUrl),
+  verification: {
+    google: "nwjwy9ikKgyouv8-QDlcJ35tXerljgzVYIBd2uINV0Q",
+  },
   alternates: {
     canonical: "/",
   },
