@@ -164,6 +164,8 @@ export const siteConfig = {
   contact: {
     phoneNumber: "+919988256290",
     phoneLabel: "+91 99882 56290",
+    alternatePhoneNumber: "+919872718686",
+    alternatePhoneLabel: "+91 98727 18686",
     whatsappNumber: "919988256290",
     whatsappLabel: "Book on WhatsApp",
     whatsappMessage:
@@ -218,6 +220,8 @@ export const siteConfig = {
 };
 
 export const phoneHref = `tel:${siteConfig.contact.phoneNumber}`;
+
+export const alternatePhoneHref = `tel:${siteConfig.contact.alternatePhoneNumber}`;
 
 export const whatsappHref = `https://wa.me/${siteConfig.contact.whatsappNumber}?text=${encodeURIComponent(
   siteConfig.contact.whatsappMessage,

@@ -3,7 +3,7 @@ import Image from "next/image";
 import { MobileCtaBar } from "@/components/mobile-cta-bar";
 import { SiteHeader } from "@/components/site-header";
 import { WhatsAppIcon } from "@/components/whatsapp-icon";
-import { absoluteUrl, buildWhatsAppHref, phoneHref, siteConfig, whatsappHref } from "@/data/site-config";
+import { absoluteUrl, alternatePhoneHref, buildWhatsAppHref, phoneHref, siteConfig, whatsappHref } from "@/data/site-config";
 
 /* ─── Schema.org Structured Data ─────────────────────────────────────────── */
 function JsonLd({ data }: { data: object }) {
@@ -860,7 +860,7 @@ export default function Home() {
                 <div className="flex flex-wrap gap-3">
                   <a
                     href={whatsappHref}
-                    className="order-2 sm:order-1 cta-whatsapp !px-6 !py-3 text-[0.95rem]"
+                    className="order-3 sm:order-1 cta-whatsapp !px-6 !py-3 text-[0.95rem]"
                     target="_blank"
                     rel="noreferrer noopener"
                     id="contact-whatsapp-btn"
@@ -879,6 +879,19 @@ export default function Home() {
                   >
                     <span aria-hidden="true" className="pulse-dot">📞</span>
                     {siteConfig.contact.phoneLabel}
+                  </a>
+                  <a
+                    href={alternatePhoneHref}
+                    className="order-2 sm:order-3 inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-[0.95rem] transition-all"
+                    style={{
+                      background: "rgba(255,255,255,0.92)",
+                      color: "#1A1200",
+                      boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
+                    }}
+                    id="contact-alt-call-btn"
+                  >
+                    <span aria-hidden="true" className="pulse-dot">📞</span>
+                    {siteConfig.contact.alternatePhoneLabel}
                   </a>
                 </div>
               </div>
@@ -910,12 +923,20 @@ export default function Home() {
                   >
                     Phone / WhatsApp
                   </p>
-                  <a
-                    href={phoneHref}
-                    className="font-extrabold text-lg text-[#1A1200] hover:underline"
-                  >
-                    {siteConfig.contact.phoneLabel}
-                  </a>
+                  <div className="flex flex-col gap-1">
+                    <a
+                      href={phoneHref}
+                      className="font-extrabold text-lg text-[#1A1200] hover:underline"
+                    >
+                      {siteConfig.contact.phoneLabel}
+                    </a>
+                    <a
+                      href={alternatePhoneHref}
+                      className="font-extrabold text-lg text-[#1A1200] hover:underline"
+                    >
+                      {siteConfig.contact.alternatePhoneLabel}
+                    </a>
+                  </div>
                 </div>
                 <div className="h-px" style={{ background: "rgba(26,18,0,0.15)" }} />
                 <div>
