@@ -3,7 +3,7 @@ import Image from "next/image";
 import { MobileCtaBar } from "@/components/mobile-cta-bar";
 import { SiteHeader } from "@/components/site-header";
 import { WhatsAppIcon } from "@/components/whatsapp-icon";
-import { absoluteUrl, alternatePhoneHref, buildWhatsAppHref, phoneHref, siteConfig, whatsappHref } from "@/data/site-config";
+import { absoluteUrl, buildWhatsAppHref, phoneHref, siteConfig, whatsappHref } from "@/data/site-config";
 
 /* ─── Schema.org Structured Data ─────────────────────────────────────────── */
 function JsonLd({ data }: { data: object }) {
@@ -128,7 +128,7 @@ export default function Home() {
                     color: "#7A4E00",
                   }}
                 >
-                  📍 Sector 20, Panchkula
+                  📍 Sector 3, Panchkula
                 </span>
                 <span
                   className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold"
@@ -411,11 +411,11 @@ export default function Home() {
                 className="section-title"
                 style={{ fontFamily: "var(--font-sora), 'Sora', sans-serif" }}
               >
-                Personal Cab Service Based in Sector 20, Panchkula
+                Personal Cab Service Based in Sector 3, Panchkula
               </h2>
               <p className="text-base leading-relaxed" style={{ color: "#4A4740" }}>
                 Abhi Cab Service is a personal, dedicated taxi provider operating from{" "}
-                <strong>Sector 20, Panchkula, near Suncity</strong>. We specialise in
+                <strong>Sector 3, Panchkula, near Suncity</strong>. We specialise in
                 local city rides, Chandigarh airport taxi service, and popular outstation
                 routes like Panchkula to Delhi and Delhi to Chandigarh.
               </p>
@@ -880,19 +880,6 @@ export default function Home() {
                     <span aria-hidden="true" className="pulse-dot">📞</span>
                     {siteConfig.contact.phoneLabel}
                   </a>
-                  <a
-                    href={alternatePhoneHref}
-                    className="order-2 sm:order-3 inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-[0.95rem] transition-all"
-                    style={{
-                      background: "rgba(255,255,255,0.92)",
-                      color: "#1A1200",
-                      boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
-                    }}
-                    id="contact-alt-call-btn"
-                  >
-                    <span aria-hidden="true" className="pulse-dot">📞</span>
-                    {siteConfig.contact.alternatePhoneLabel}
-                  </a>
                 </div>
               </div>
 
@@ -923,20 +910,11 @@ export default function Home() {
                   >
                     Phone / WhatsApp
                   </p>
-                  <div className="flex flex-col gap-1">
-                    <a
-                      href={phoneHref}
-                      className="font-extrabold text-lg text-[#1A1200] hover:underline"
-                    >
-                      {siteConfig.contact.phoneLabel}
-                    </a>
-                    <a
-                      href={alternatePhoneHref}
-                      className="font-extrabold text-lg text-[#1A1200] hover:underline"
-                    >
-                      {siteConfig.contact.alternatePhoneLabel}
-                    </a>
-                  </div>
+                  <p
+                    className="font-extrabold text-lg text-[#1A1200] hover:underline"
+                  >
+                    <a href={phoneHref}>{siteConfig.contact.phoneLabel}</a>
+                  </p>
                 </div>
                 <div className="h-px" style={{ background: "rgba(26,18,0,0.15)" }} />
                 <div>
@@ -986,6 +964,19 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      {/* ── Demo Disclaimer Bar ── */}
+      <div
+        className="w-full py-3 px-4 text-center text-xs font-semibold"
+        style={{
+          background: "#FFFBEC",
+          borderTop: "1.5px dashed rgba(255,184,0,0.55)",
+          color: "#7A4E00",
+          letterSpacing: "0.02em",
+        }}
+      >
+        🛠️ This website is a <strong>demo</strong> — built to showcase design and functionality. Not a live business listing.
+      </div>
 
       <MobileCtaBar />
     </main>

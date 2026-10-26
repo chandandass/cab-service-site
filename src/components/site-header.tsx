@@ -75,14 +75,13 @@ export function SiteHeader() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
           ? "bg-white/95 backdrop-blur-md border-b border-[#EDE9E0] shadow-[0_4px_20px_rgba(26,23,20,0.06)]"
           : "bg-white border-b border-[#EDE9E0]"
-      }`}
+        }`}
     >
       <div className="bg-[#FFB800] text-[#1A1200] text-xs font-semibold text-center py-1.5 px-4 tracking-wide hidden sm:block">
-        Sector 20, Panchkula · Serving Chandigarh, Mohali &amp; Delhi Routes · Call or WhatsApp for Instant Fare
+        Sector 3, Panchkula · Serving Chandigarh, Mohali &amp; Delhi Routes · Call or WhatsApp for Instant Fare
       </div>
 
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-2.5 px-4 py-3 sm:gap-3 sm:px-6 sm:py-3 lg:px-8">
@@ -149,19 +148,16 @@ export function SiteHeader() {
             aria-controls="mobile-nav-panel"
           >
             <span
-              className={`absolute block w-5 h-0.5 bg-[#1A1714] transition-all duration-300 ${
-                isMenuOpen ? "rotate-45" : "-translate-y-1.5"
-              }`}
+              className={`absolute block w-5 h-0.5 bg-[#1A1714] transition-all duration-300 ${isMenuOpen ? "rotate-45" : "-translate-y-1.5"
+                }`}
             />
             <span
-              className={`absolute block w-5 h-0.5 bg-[#1A1714] transition-all duration-300 ${
-                isMenuOpen ? "opacity-0" : "opacity-100"
-              }`}
+              className={`absolute block w-5 h-0.5 bg-[#1A1714] transition-all duration-300 ${isMenuOpen ? "opacity-0" : "opacity-100"
+                }`}
             />
             <span
-              className={`absolute block w-5 h-0.5 bg-[#1A1714] transition-all duration-300 ${
-                isMenuOpen ? "-rotate-45" : "translate-y-1.5"
-              }`}
+              className={`absolute block w-5 h-0.5 bg-[#1A1714] transition-all duration-300 ${isMenuOpen ? "-rotate-45" : "translate-y-1.5"
+                }`}
             />
           </button>
 
@@ -182,11 +178,10 @@ export function SiteHeader() {
                   href={item.href}
                   onClick={() => handleNavClick(item.sectionId)}
                   aria-current={activeSection === item.sectionId ? "page" : undefined}
-                  className={`rounded-xl border px-4 py-3 text-[0.95rem] font-semibold transition-colors ${
-                    activeSection === item.sectionId
+                  className={`rounded-xl border px-4 py-3 text-[0.95rem] font-semibold transition-colors ${activeSection === item.sectionId
                       ? "border-[rgba(255,184,0,0.30)] bg-[rgba(255,184,0,0.16)] text-[#7A4E00] shadow-[0_6px_16px_rgba(255,184,0,0.10)]"
                       : "border-transparent text-[#3F3A35] hover:bg-[#FFF7E1] hover:text-[#1A1714]"
-                  }`}
+                    }`}
                 >
                   {item.label}
                 </a>

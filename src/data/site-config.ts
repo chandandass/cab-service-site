@@ -33,11 +33,11 @@ export type ServiceArea = {
 
 
 const navigation: NavigationItem[] = [
-  { label: "Home",     href: "#home" },
+  { label: "Home", href: "#home" },
   { label: "Services", href: "#services" },
-  { label: "Pricing",  href: "#pricing", featured: true },
-  { label: "About",    href: "#about" },
-  { label: "Contact",  href: "#contact" },
+  { label: "Pricing", href: "#pricing", featured: true },
+  { label: "About", href: "#about" },
+  { label: "Contact", href: "#contact" },
 ];
 
 
@@ -154,7 +154,7 @@ const faqs: FaqItem[] = [
 export const siteConfig = {
   siteUrl: "https://abhicabservice.vercel.app",
   brand: {
-    name: "Abhi Cab Service",
+    name: "Demo Cab Service",
     eyebrow: "Local, Airport and Delhi Route Cab Booking",
     heroTitle: "Trusted Cab Service in Panchkula, Chandigarh and Mohali",
     heroDescription:
@@ -162,21 +162,19 @@ export const siteConfig = {
     trustLine: "Quick booking, clean cars and responsive local support.",
   },
   contact: {
-    phoneNumber: "+919988256290",
-    phoneLabel: "+91 99882 56290",
-    alternatePhoneNumber: "+919872718686",
-    alternatePhoneLabel: "+91 98727 18686",
-    whatsappNumber: "919988256290",
+    phoneNumber: "+917364839326",
+    phoneLabel: "+91 73648 39326",
+    whatsappNumber: "917364839326",
     whatsappLabel: "Book on WhatsApp",
     whatsappMessage:
       "Hi, I need a cab. Please share fare and availability.",
-    address: "Sector 20, Panchkula, near Suncity",
-    mapsLabel: "Sector 20 Panchkula, Near Suncity",
+    address: "Sector 3, Panchkula, near Suncity",
+    mapsLabel: "Sector 3 Panchkula, Near Suncity",
   },
   seo: {
-    title: "Cab Service in Panchkula, Chandigarh and Mohali | Abhi Cab Service",
+    title: "Cab Service in Panchkula, Chandigarh and Mohali | Demo Cab Service",
     description:
-      "Abhi Cab Service offers local, airport and outstation taxi booking in Panchkula, Chandigarh and Mohali with route pricing for Chandigarh to Delhi and Delhi to Chandigarh rides.",
+      "Demo Cab Service offers local, airport and outstation taxi booking in Panchkula, Chandigarh and Mohali with route pricing for Chandigarh to Delhi and Delhi to Chandigarh rides.",
     ogImage: "/images/og-cover.png",
     keywords: [
       "cab service in Panchkula",
@@ -220,8 +218,6 @@ export const siteConfig = {
 };
 
 export const phoneHref = `tel:${siteConfig.contact.phoneNumber}`;
-
-export const alternatePhoneHref = `tel:${siteConfig.contact.alternatePhoneNumber}`;
 
 export const whatsappHref = `https://wa.me/${siteConfig.contact.whatsappNumber}?text=${encodeURIComponent(
   siteConfig.contact.whatsappMessage,
