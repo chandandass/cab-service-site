@@ -152,7 +152,7 @@ const faqs: FaqItem[] = [
 
 
 export const siteConfig = {
-  siteUrl: "https://abhicabservice.vercel.app",
+  siteUrl: "https://democabservice.vercel.app",
   brand: {
     name: "Demo Cab Service",
     eyebrow: "Local, Airport and Delhi Route Cab Booking",
