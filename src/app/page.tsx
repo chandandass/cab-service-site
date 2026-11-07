@@ -366,7 +366,7 @@ export default function Home() {
       ══════════════════════════════════════════════════════════════ */}
       <section
         className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16"
-        aria-label="Why choose Abhi Cab Service"
+        aria-label="Why choose Demo Cab Service"
       >
         <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
           {trustHighlights.map((item) => (
@@ -401,7 +401,7 @@ export default function Home() {
         id="about"
         className="section-pad"
         style={{ background: "var(--gray-50)" }}
-        aria-label="About Abhi Cab Service"
+        aria-label="About Demo Cab Service"
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
@@ -414,7 +414,7 @@ export default function Home() {
                 Personal Cab Service Based in Sector 3, Panchkula
               </h2>
               <p className="text-base leading-relaxed" style={{ color: "#4A4740" }}>
-                Abhi Cab Service is a personal, dedicated taxi provider operating from{" "}
+                Demo Cab Service is a personal, dedicated taxi provider operating from{" "}
                 <strong>Sector 3, Panchkula, near Suncity</strong>. We specialise in
                 local city rides, Chandigarh airport taxi service, and popular outstation
                 routes like Panchkula to Delhi and Delhi to Chandigarh.
