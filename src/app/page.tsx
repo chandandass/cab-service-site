@@ -230,7 +230,7 @@ export default function Home() {
                 <div className="relative w-full h-full rounded-[28px] sm:rounded-3xl overflow-hidden shadow-2xl">
                   <Image
                     src="/images/hero-cab-light.png"
-                    alt="Abhi Cab Service – white sedan taxi ready for pickup"
+                    alt="demo Cab Service – white sedan taxi ready for pickup"
                     fill
                     priority
                     sizes="(min-width: 1024px) 50vw, 100vw"
